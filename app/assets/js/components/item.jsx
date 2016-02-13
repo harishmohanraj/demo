@@ -19,8 +19,8 @@ var Item = React.createClass({
     render : function(){
 
         return(<div className="carousel-item-container" style={this.props.styleObj}>
-            {this.props.slides.map(function(slide,i){
-                    return <ItemFragment slideItem = {slide} slideIndex = {i}/>
+            {this.props.slides.map(function(slide,index){
+                    return <ItemFragment slideItem = {slide} slideIndex = {index}/>
             })}
         </div>)
     }

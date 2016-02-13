@@ -4,9 +4,10 @@ var Arrow = React.createClass({
     returnButton : function(){
         var returnButtonItem,
             direction = this.props.arrowType,
-            notFirstElement = this.props.arrowPropsObject.activeIndex !== 0,
+            notFirstElement = !!this.props.arrowPropsObject.activeIndex,
             notLastElement = this.props.arrowPropsObject.activeIndex !== this.props.arrowPropsObject.length -1,
             infiniteScroll = this.props.arrowPropsObject.infiniteScroll;
+            
         if(this.props.arrowPropsObject.showArrows){
             if(direction==='left'){
                 if(infiniteScroll || notFirstElement){

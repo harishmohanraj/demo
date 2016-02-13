@@ -59,33 +59,30 @@ var Carousel = React.createClass({
             this.autoScroll();
         }
     },
-    dotsClick : function(i){
-        if(i !== this.state.activeIndex){
+    dotsClick : function(currentIndex){
+        if(currentIndex !== this.state.activeIndex){
             this.setState({
-                activeIndex : i
+                activeIndex : currentIndex
             });
         }
         if (this.state.autoPlay) {
-            console.log("Dots clicked");
             clearInterval(this._infiniteScroll);
         }
     },
     slidePrev : function(){
-        this.setState({
-            activeIndex: ((this.state.activeIndex + this.props.data.items.length) - 1) % this.props.data.items.length
-        });
-        if (this.state.autoPlay) {
-            console.log("Previous clicked");
-            clearInterval(this._infiniteScroll);
-        }
+        var direction = ((this.state.activeIndex + this.props.data.items.length) - 1) % this.props.data.items.length;
+        this.slideTraverse(direction);
     },
     slideNext : function(){
+        var direction = (this.state.activeIndex + 1) % this.props.data.items.length;
+        this.slideTraverse(direction);
+    },
+    slideTraverse : function(direction){
         this.setState({
-            activeIndex: (this.state.activeIndex + 1) % this.props.data.items.length
+            activeIndex: direction
         });
 
         if (this.state.autoPlay) {
-            console.log("Next clicked");
             clearInterval(this._infiniteScroll);
         }
     },
@@ -94,7 +91,7 @@ var Carousel = React.createClass({
             width = this.state.width,
             trackWidth = width * children.length,
             trackPositionLeft = -(width * this.state.activeIndex),
-            trackPositionRight = (this.state.activeIndex === 0) ? trackWidth - width : trackWidth - (width * (this.state.activeIndex + 1)),
+            trackPositionRight = trackWidth - (width * (this.state.activeIndex + 1)),
             styleObj = (this.state.direction === 'left') ? { width: trackWidth, marginLeft: trackPositionLeft} : { width: trackWidth,  right: trackPositionRight, 'flexDirection' :'row-reverse'},
             arrowPropsObject = {
                 infiniteScroll : this.state.infiniteScroll,
